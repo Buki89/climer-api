@@ -74,7 +74,7 @@ export const handleRegister = async (req: Request, res: Response) => {
 };
 
 export const handleLogout = async (req: Request, res: Response) => {
-  req.session.destroy((err: any) => {
+  req.session.destroy(() => {
     res.sendStatus(200);
   });
 };
