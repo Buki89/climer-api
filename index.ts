@@ -53,7 +53,7 @@ io.use(wrap(sessionMiddleware as any));
 io.use(authorizeUser);
 io.on("connect", async (socket: any) => {
   initializeUser(socket);
-  console.log("player connected", socket.user.username);
+  console.log("player connected", socket.user.username, socket.user.id);
   const onlineUsers = await getOnlinePlayer();
 
   socket.broadcast.emit("get_players", onlineUsers);

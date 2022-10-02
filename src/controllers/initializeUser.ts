@@ -2,6 +2,7 @@ import { redisClient } from "../redis";
 
 export const initializeUser = async (socket: any) => {
   socket.user = { ...socket.request.session.user };
+  console.log("socket.user", socket.user);
   socket.join(socket.user.id);
 
   const userKey = `userid:${socket.user.username}`;
