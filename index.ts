@@ -96,5 +96,6 @@ io.on("connect", async (socket: any) => {
 });
 
 server.listen(process.env.PORT || 4000, () => {
+  console.log("process.env.PORT", process.env.PORT);
   console.log("The application is listening on port 4000!");
 });
