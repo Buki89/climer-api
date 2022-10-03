@@ -1,4 +1,4 @@
-import { Io, redisUser } from "../../global-types";
+import { Io, User } from "../../types";
 import { redisClient } from "../redis";
 
 export const changeReadyStatus = (io: Io) => async (username: string) => {
@@ -8,7 +8,7 @@ export const changeReadyStatus = (io: Io) => async (username: string) => {
 
   await redisClient.hset(key, "ready", user.ready === "1" ? "0" : "1");
 
-  const updatedUser = (await redisClient.hgetall(key)) as redisUser;
+  const updatedUser = (await redisClient.hgetall(key)) as User;
 
   // socket.broadcast.emit("updated_user_info", updatedUser);
   io.to(user.room).emit("updated_user_info", updatedUser);

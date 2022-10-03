@@ -1,8 +1,8 @@
-import { Io, ISocket, redisRoom } from "global-types";
 import { getRooms } from "../utils/getRooms";
 import { redisClient } from "../redis";
+import { Io, ISocket, Room } from "../../types";
 
-export const addRoom = (io: Io, socket: ISocket) => async (room: redisRoom) => {
+export const addRoom = (io: Io, socket: ISocket) => async (room: Room) => {
   const roomId = `room:${room.id}`;
 
   const expireTime = 60 * 60 * 24;
@@ -18,7 +18,9 @@ export const addRoom = (io: Io, socket: ISocket) => async (room: redisRoom) => {
     "maxPlayers",
     room.maxPlayers,
     "admin",
-    socket.user.username
+    socket.data.user?.username || "",
+    "gameStarted",
+    0
   );
 
   await redisClient.expire(roomId, expireTime);

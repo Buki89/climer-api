@@ -1,14 +1,14 @@
-import { redisUser } from "../../global-types";
+import { User } from "../../types";
 import { redisClient } from "../redis";
 
-export const getOnlinePlayer = async (roomId?: string) => {
+export const getUsersInRoom = async (roomId: string) => {
   const usersKeys = await redisClient.keys("userid:*");
 
   const users = (await Promise.all(
     usersKeys.map(async (user) => {
       return await redisClient.hgetall(user);
     })
-  )) as unknown as redisUser[];
+  )) as unknown as User[];
 
   if (roomId) {
     return users.filter(
